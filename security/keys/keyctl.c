@@ -133,10 +133,7 @@ SYSCALL_DEFINE5(add_key, const char __user *, _type,
 
 	key_ref_put(keyring_ref);
  error3:
-	if (payload) {
-		memzero_explicit(payload, plen);
-		kvfree(payload);
-	}
+	kvfree_sensitive(payload, plen);
  error2:
 	kfree(description);
  error:
@@ -800,6 +797,7 @@ can_read_key:
 			ret = key->type->read(key, buffer, buflen);
 		up_read(&key->sem);
 	}
+	__kvzfree(key_data, key_data_len);
 
 error2:
 	key_put(key);
@@ -1101,10 +1099,7 @@ long keyctl_instantiate_key_common(key_serial_t id,
 		keyctl_change_reqkey_auth(NULL);
 
 error2:
-	if (payload) {
-		memzero_explicit(payload, plen);
-		kvfree(payload);
-	}
+	kvfree_sensitive(payload, plen);
 error:
 	return ret;
 }

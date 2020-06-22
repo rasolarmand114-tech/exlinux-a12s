@@ -371,4 +371,8 @@ static inline int kvm_arm_get_spectre_bhb_state(void)
 	return SPECTRE_VULNERABLE; /* aka SMCCC_RET_NOT_SUPPORTED */
 }
 
+// Comment kvm_arm_vcpu_loaded if its problematic
+
+#define kvm_arm_vcpu_loaded(vcpu)	(false)
+
 #endif /* __ARM_KVM_HOST_H__ */
