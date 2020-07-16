@@ -3524,17 +3524,11 @@ ALC1220_VB_DESKTOP(0x26ce, 0x0a01), /* Asrock TRX40 Creator */
  * they pretend to be 96kHz mono as a workaround for stereo being broken
  * by that...
  *
- * They also have an issue with initial stream alignment that causes the
- * channels to be swapped and out of phase, which is dealt with in quirks.c.
+ * They also have swapped L-R channels, but that's for userspace to deal
+ * with.
  */
 {
-	.match_flags = USB_DEVICE_ID_MATCH_DEVICE |
-		       USB_DEVICE_ID_MATCH_INT_CLASS |
-		       USB_DEVICE_ID_MATCH_INT_SUBCLASS,
-	.idVendor = 0x534d,
-	.idProduct = 0x2109,
-	.bInterfaceClass = USB_CLASS_AUDIO,
-	.bInterfaceSubClass = USB_SUBCLASS_AUDIOCONTROL,
+	USB_DEVICE(0x534d, 0x2109),
 	.driver_info = (unsigned long) &(const struct snd_usb_audio_quirk) {
 		.vendor_name = "MacroSilicon",
 		.product_name = "MS2109",
