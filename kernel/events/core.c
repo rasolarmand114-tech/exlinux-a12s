@@ -96,9 +96,7 @@ static void remote_function(void *data)
  * Calls the function @func when the task is currently running. This might
  * be on the current CPU, which just calls the function directly
  *
- * returns: @func return value, or
- *	    -ESRCH  - when the process isn't running
- *	    -EAGAIN - when the process moved away
+ * returns @func return value or -ESRCH or -ENXIO when the process isn't running
  */
 static int
 task_function_call(struct task_struct *p, remote_function_f func, void *info)
@@ -111,11 +109,26 @@ task_function_call(struct task_struct *p, remote_function_f func, void *info)
 	};
 	int ret;
 
-	do {
-		ret = smp_call_function_single(task_cpu(p), remote_function, &data, 1);
+	// NPATCH
+	for (;;) {
+		ret = smp_call_function_single(task_cpu(p), remote_function,
+					       &data, 1);
 		if (!ret)
 			ret = data.ret;
-	} while (ret == -EAGAIN);
+
+		if (ret != -EAGAIN)
+			break;
+
+		cond_resched();
+	}
+	// END NPATCH
+
+	// Uncomment this and disable the NPATCH if something went wrong
+	// do {
+	// 	ret = smp_call_function_single(task_cpu(p), remote_function, &data, 1);
+	// 	if (!ret)
+	// 		ret = data.ret;
+	// } while (ret == -EAGAIN);
 
 	return ret;
 }
