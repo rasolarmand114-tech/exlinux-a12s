@@ -58,11 +58,15 @@ static int erofs_read_inode(struct inode *inode, void *data)
 		i_gid_write(inode, le32_to_cpu(die->i_gid));
 		set_nlink(inode, le32_to_cpu(die->i_nlink));
 
-		/* ns timestamp */
-		inode->i_mtime.tv_sec = inode->i_ctime.tv_sec =
-			le64_to_cpu(die->i_ctime);
-		inode->i_mtime.tv_nsec = inode->i_ctime.tv_nsec =
-			le32_to_cpu(die->i_ctime_nsec);
+		// /* ns timestamp */
+		// inode->i_mtime.tv_sec = inode->i_ctime.tv_sec =
+		// 	le64_to_cpu(die->i_ctime);
+		// inode->i_mtime.tv_nsec = inode->i_ctime.tv_nsec =
+		// 	le32_to_cpu(die->i_ctime_nsec);
+
+		/* extended inode has its own timestamp */
+		inode->i_ctime.tv_sec = le64_to_cpu(v2->i_ctime);
+		inode->i_ctime.tv_nsec = le32_to_cpu(v2->i_ctime_nsec);
 
 		inode->i_size = le64_to_cpu(die->i_size);
 
