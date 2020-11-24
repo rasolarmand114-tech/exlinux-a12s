@@ -1337,14 +1337,28 @@ void snd_usb_ctl_msg_quirk(struct usb_device *dev, unsigned int pipe,
 	if (is_itf_usb_dsd_dac(chip->usb_id)
 	    && (requesttype & USB_TYPE_MASK) == USB_TYPE_CLASS)
 		msleep(20);
-
+	/*
+	 * We temporarily deprecate this piece of code for a moment
+	 * because i am not sure if this is viable to apply this patch
+	 * . note that please disable the new patch if the new one
+	 * is problematic because samsung is really pain in the arse.
+	 */
 	/* Zoom R16/24, Logitech H650e, Jabra 550a needs a tiny delay here,
 	 * otherwise requests like get/set frequency return as failed despite
 	 * actually succeeding.
 	 */
+	// if ((chip->usb_id == USB_ID(0x1686, 0x00dd) ||
+	//      chip->usb_id == USB_ID(0x046d, 0x0a46) ||
+	//      chip->usb_id == USB_ID(0x0b0e, 0x0349)) &&
+	/* Zoom R16/24, many Logitech(at least H650e/H570e/BCC950),
+	 * Jabra 550a, Kingston HyperX needs a tiny delay here,
+	 * otherwise requests like get/set frequency return
+	 * as failed despite actually succeeding.
+	 */
 	if ((chip->usb_id == USB_ID(0x1686, 0x00dd) ||
-	     chip->usb_id == USB_ID(0x046d, 0x0a46) ||
-	     chip->usb_id == USB_ID(0x0b0e, 0x0349)) &&
+	     USB_ID_VENDOR(chip->usb_id) == 0x046d  || /* Logitech */
+	     chip->usb_id == USB_ID(0x0b0e, 0x0349) ||
+	     chip->usb_id == USB_ID(0x0951, 0x16ad)) &&
 	    (requesttype & USB_TYPE_MASK) == USB_TYPE_CLASS)
 		usleep_range(1000, 2000);
 
