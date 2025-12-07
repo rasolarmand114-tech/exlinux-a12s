@@ -1,0 +1,12 @@
+[submodule "toolchain/clang-r383902"]
+	path = toolchain/clang-r383902
+	url = https://github.com/Mizumo-prjkt/clang-r383902
+[submodule "toolchain/clang-r416183b"]
+	path = toolchain/clang-r416183b
+	url = https://github.com/MizProject/clang-r416183b
+[submodule "root/rKSU"]
+	path = root/rKSU
+	url = https://github.com/rsuntk/KernelSU
+[submodule "root/nxtKSU"]
+	path = root/nxtKSU
+	url = https://github.com/KernelSU-Next/KernelSU-Next
