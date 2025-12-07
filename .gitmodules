@@ -13,3 +13,7 @@
 [submodule "toolchain/CC-4.9"]
 	path = toolchain/CC-4.9
 	url = https://github.com/Mizumo-prjkt/aarch64-linux-android-4.9
+[submodule "root/susfs"]
+	path = root/susfs
+	url = https://gitlab.com/simonpunk/susfs4ksu
+	branch = kernel-4.19
