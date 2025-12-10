@@ -35,7 +35,7 @@ if [ "$1" == "--help" ] || [ "$1" == "-h" ]; then
 fi
 
 function help() {
-        echo "MizKernel Builderscript"
+    echo "MizKernel Builderscript"
     echo "Ported for REKERNEL Edition"
     echo ""
     echo "./build.sh [ARGS(ANY)]"
