@@ -34,15 +34,34 @@ if [ "$1" == "--help" ] || [ "$1" == "-h" ]; then
     exit 1
 fi
 
+function help() {
+        echo "MizKernel Builderscript"
+    echo "Ported for REKERNEL Edition"
+    echo ""
+    echo "./build.sh [ARGS(ANY)]"
+    echo ""
+    echo "Args:"
+    echo "Help       -h/--help"
+    echo "LTO"
+    echo "   FULL    --lto=full"
+    echo "   THIN    --lto=thin"
+    echo "   NONE    --lto=null"
+    echo "LLD"
+    echo "   LLD ON  --lld=on"
+    echo "   LLD OFF --lld=off"
+    echo "Not arg with LLD, disables LLD by default"
+    echo "Git Submodule fetch"
+    echo "   Git submodule on  --gs=on"
+    echo "   Git submodule off --gs=off"
+    exit
+}
+
 
 # Check if theres no arg
 
 
 if [ -z "$1" ]; then
-    echo "No args was passed"
-    echo "See: ./build_kernel.sh -h"
-    echo "Starting in 10sec"
-    sleep 10
+    help
 fi
 
 
