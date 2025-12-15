@@ -320,7 +320,9 @@ include scripts/subarch.include
 # Default value for CROSS_COMPILE is not to prefix executables
 # Note: Some architectures assign CROSS_COMPILE in their arch/*/Makefile
 ARCH		?=arm64
-CROSS_COMPILE   ?= $(srctree)/toolchain/CC-4.9/bin/aarch64-linux-android-
+# Disown/Don't utilize standard 4.9
+# CROSS_COMPILE   ?= $(srctree)/toolchain/CC-4.9/bin/aarch64-linux-android-
+CROSS_COMPILE   ?= $(srctree)/toolchain/proton-clang/bin/aarch64-linux-gnu-
 
 # Architecture as present in compile.h
 UTS_MACHINE 	:= $(ARCH)
@@ -372,8 +374,11 @@ KBUILD_HOSTLDLIBS   := $(HOST_LFS_LIBS) $(HOSTLDLIBS)
 AS		= $(CROSS_COMPILE)as
 LD		= $(CROSS_COMPILE)ld
 # This is the default CC, but i should probably implement a flag later
-# on to accomodate both clangs (r39 and r41)
-CC      = $(srctree)/toolchain/clang-r383902/bin/clang
+# on to accomodate both clangs (r38 and r41)
+# CC      = $(srctree)/toolchain/clang-r383902/bin/clang
+# Proton clang
+CC      = $(srctree)/toolchain/proton-clang/bin/clang
+# 
 CPP		= $(CC) -E
 AR		= $(CROSS_COMPILE)ar
 NM		= $(CROSS_COMPILE)nm

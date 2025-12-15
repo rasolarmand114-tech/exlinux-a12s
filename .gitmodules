@@ -18,3 +18,6 @@
 	path = root/susfs
 	url = https://gitlab.com/simonpunk/susfs4ksu
 	branch = gki-android16-6.12
+[submodule "toolchain/proton-clang"]
+	path = toolchain/proton-clang
+	url = https://github.com/kdrag0n/proton-clang
