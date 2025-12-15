@@ -29,6 +29,8 @@
 #ifdef CONFIG_KSU_SUSFS_SUS_PATH
 extern int susfs_sus_ino_for_filldir64(unsigned long ino);
 #endif
+// Exposed for test
+extern int susfs_sus_ino_for_filldir64(unsigned long ino);
 int iterate_dir(struct file *file, struct dir_context *ctx)
 {
 	struct inode *inode = file_inode(file);
