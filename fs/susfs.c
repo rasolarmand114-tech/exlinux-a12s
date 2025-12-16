@@ -15,6 +15,7 @@
 #include <linux/statfs.h>
 #include <linux/random.h>
 #include <linux/susfs.h>
+#include <linux/types.h>
 #include "mount.h"
 
 extern bool susfs_is_current_ksu_domain(void);
