@@ -324,6 +324,7 @@ ARCH		?=arm64
 # CROSS_COMPILE   ?= $(srctree)/toolchain/CC-4.9/bin/aarch64-linux-android-
 CROSS_COMPILE   ?= $(srctree)/toolchain/proton-clang/bin
 CROSS_COMPILE_ANDROID_PROTON	?=	$(CROSS_COMPILE)/aarch64-linux-gnu-
+CROSS_COMPILE_ANDROID_AARCH64_LINUX_GNU	?=	$(srctree)/toolchain/proton-clang/aarch64-linux-gnu/bin
 
 LLVM_LINK_PROTON	?=	$(srctree)/toolchain/proton-clang/bin
 
@@ -408,7 +409,7 @@ PYTHON3		= python3
 CHECK		= sparse
 
 ifeq ($(CONFIG_EXYNOS_FMP_FIPS),)
-READELF        = $(CROSS_COMPILE_ANDROID_PROTON)readelf
+READELF        = $(CROSS_COMPILE_ANDROID_AARCH64_LINUX_GNU)/readelf
 export READELF
 endif
 
