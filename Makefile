@@ -322,8 +322,8 @@ include scripts/subarch.include
 ARCH		?=arm64
 # Disown/Don't utilize standard 4.9
 # CROSS_COMPILE   ?= $(srctree)/toolchain/CC-4.9/bin/aarch64-linux-android-
-CROSS_COMPILE   ?= $(srctree)/toolchain/proton-clang/bin
-CROSS_COMPILE_ANDROID_PROTON	?=	$(CROSS_COMPILE)/aarch64-linux-gnu-
+CROSS_COMPILE   ?= $(srctree)/toolchain/proton-clang/aarch64-linux-gnu/bin/
+CROSS_COMPILE_ANDROID_PROTON	?=	$(srctree)/toolchain/proton-clang/bin/aarch64-linux-gnu-
 CROSS_COMPILE_ANDROID_AARCH64_LINUX_GNU	?=	$(srctree)/toolchain/proton-clang/aarch64-linux-gnu/bin
 
 LLVM_LINK_PROTON	?=	$(srctree)/toolchain/proton-clang/bin
@@ -377,8 +377,8 @@ KBUILD_HOSTLDLIBS   := $(HOST_LFS_LIBS) $(HOSTLDLIBS)
 # Make variables (CC, etc...)
 # AS & AD Calls are deprecated as its broken for some reason
 
-AS		= $(CROSS_COMPILE_ANDROID_PROTON)as
-LD		= $(CROSS_COMPILE_ANDROID_PROTON)ld
+AS		= $(CROSS_COMPILE)as
+LD		= $(CROSS_COMPILE)ld
 # This is the default CC, but i should probably implement a flag later
 # on to accomodate both clangs (r38 and r41)
 # CC      = $(srctree)/toolchain/clang-r383902/bin/clang
