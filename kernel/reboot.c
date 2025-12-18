@@ -32,16 +32,7 @@ EXPORT_SYMBOL(cad_pid);
 #endif
 enum reboot_mode reboot_mode DEFAULT_REBOOT_MODE;
 
-/*
- * KSU Implementation
- * Mizumo-prjkt MSG
- * As of v3 of KSU, this type of manual hook is needed
- * To achieve proper root access
- * As per @rsuntk suggests. (And some back and forth referencing)
- */
-#ifdef CONFIG_KSU
-extern void ksu_handle_reboot(void);
-#endif
+
 
 /*
  * This variable is used privately to keep track of whether or not
@@ -313,6 +304,21 @@ EXPORT_SYMBOL_GPL(kernel_power_off);
 DEFINE_MUTEX(system_transition_mutex);
 
 /*
+ * KSU Implementation
+ * Mizumo-prjkt MSG
+ * As of v3 of KSU, this type of manual hook is needed
+ * To achieve proper root access
+ * As per @rsuntk suggests. (And some back and forth referencing)
+ * 
+ * UPDATE:
+ * 	IT SEEMS THAT THE FLAG PREVIOUS OF THE PATCH WAS DEPRECATED. YIKES
+ * 
+ */
+#ifdef CONFIG_KSU
+extern int ksu_handle_sys_reboot(int magic1, int magic2, unsigned int cmd, void __user **arg);
+#endif
+
+/*
  * Reboot system call: for obvious reasons only root may call it,
  * and even root needs to set up some magic numbers in the registers
  * so that some mistake won't make this reboot the whole machine.
@@ -320,6 +326,7 @@ DEFINE_MUTEX(system_transition_mutex);
  *
  * reboot doesn't sync: do that yourself before calling this.
  */
+
 SYSCALL_DEFINE4(reboot, int, magic1, int, magic2, unsigned int, cmd,
 		void __user *, arg)
 {
@@ -327,8 +334,11 @@ SYSCALL_DEFINE4(reboot, int, magic1, int, magic2, unsigned int, cmd,
 	char buffer[256];
 	int ret = 0;
 
-	#ifdef CONFIG_KSU // ??
-    ksu_handle_reboot();
+	#ifdef CONFIG_KSU
+    /* Note: We pass &arg (address of arg) because ksu_handle_sys_reboot 
+       expects "void __user **" and dereferences it.
+    */
+    ksu_handle_sys_reboot(magic1, magic2, cmd, (void __user **)&arg);
     #endif
 
 	/* We only trust the superuser with rebooting the system. */
