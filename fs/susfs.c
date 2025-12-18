@@ -20,6 +20,7 @@
 
 #include <linux/susfs.h>
 
+
 extern bool susfs_is_current_ksu_domain(void);
 
 #ifdef CONFIG_KSU_SUSFS_ENABLE_LOG
@@ -995,3 +996,5 @@ void susfs_init(void) {
 /* No module exit is needed becuase it should never be a loadable kernel module */
 //void __init susfs_exit(void)
 
+
+#include <linux/susfs_backports.h> // include/linux/susfs_backports.h ; Backport layers
