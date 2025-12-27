@@ -20,6 +20,8 @@
 #include <linux/atomic.h>
 #include <asm/page.h>
 
+#include <linux/android_kabi.h>
+
 /* Free memory management - zoned buddy allocator.  */
 #ifndef CONFIG_FORCE_MAX_ZONEORDER
 #define MAX_ORDER 11
