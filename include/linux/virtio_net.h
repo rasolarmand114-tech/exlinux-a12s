@@ -76,17 +76,17 @@ retry:
 				return -EINVAL;
 			}
 		}
-	}
+	
 
 	if (hdr->gso_type != VIRTIO_NET_HDR_GSO_NONE) {
-		u16 gso_size = __virtio16_to_cpu(little_endian, hdr->gso_size);
+			u16 gso_size = __virtio16_to_cpu(little_endian, hdr->gso_size);
 
-		skb_shinfo(skb)->gso_size = gso_size;
-		skb_shinfo(skb)->gso_type = gso_type;
+			skb_shinfo(skb)->gso_size = gso_size;
+			skb_shinfo(skb)->gso_type = gso_type;
 
 			/* Header must be checked, and gso_segs computed. */
-			shinfo->gso_type |= SKB_GSO_DODGY;
-			shinfo->gso_segs = 0;
+			skb_shinfo(skb)->gso_type |= SKB_GSO_DODGY;
+			skb_shinfo(skb)->gso_segs = 0;
 		}
 	}
 
