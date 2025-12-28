@@ -131,6 +131,7 @@
 #define HP_LD220TA_PRODUCT_ID	0x4349
 #define HP_LD960TA_PRODUCT_ID	0x4439
 #define HP_LM940_PRODUCT_ID	0x5039
+#define HP_LD381_PRODUCT_ID	0x0f7f
 
 /* Cressi Edy (diving computer) PC interface */
 #define CRESSI_VENDOR_ID	0x04b8
