@@ -137,7 +137,13 @@ static ssize_t sysfs_store_ant(struct kobject *kobj, struct kobj_attribute *attr
 
 static struct kobject *wifi_kobj_ref;
 static char sysfs_mac_override[] = "ff:ff:ff:ff:ff:ff";
-static u16 sysfs_antenna = SLSI_ANTENNA_NOT_SET;
+// Problematic Line of code
+// driver wildcardly tells sysfs to pick what number, causing some wlan destabilization
+// in assumption. So we need to hardcode the antenna
+// static u16 sysfs_antenna = SLSI_ANTENNA_NOT_SET;
+// And we here testing this bois
+static u16 sysfs_antenna = 1;
+
 static struct kobj_attribute mac_attr = __ATTR(mac_addr, 0660, sysfs_show_macaddr, sysfs_store_macaddr);
 static struct kobj_attribute pm_attr = __ATTR(pm, 0660, sysfs_show_pm, sysfs_store_pm);
 static struct kobj_attribute ver_attr = __ATTR(wifiver, 0660, sysfs_show_version_info, NULL);
