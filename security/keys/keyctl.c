@@ -797,7 +797,8 @@ can_read_key:
 			ret = key->type->read(key, buffer, buflen);
 		up_read(&key->sem);
 	}
-	__kvzfree(key_data, key_data_len);
+	// There's no reference related to key_data and key_data_len
+	// __kvzfree(key_data, key_data_len);
 
 error2:
 	key_put(key);
