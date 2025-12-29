@@ -323,3 +323,16 @@ config EXYNOS_PSTATE_HAFM
 	  This option sets P-state boost solution as HAFM.
 	  The config makes HIU just deliver frequency level and power budget
 	  given from CPUFreq driver and register set.
+
+config THOMAS_GPU_OVERCLK
+	bool "Exynos GPU Overclock by Thomas Turner for Exynos 850"
+	depends on ARM_EXYNOS_ACME
+	help
+	 This adds the Thomas Turner's (DaemonMCR on Github) Patch
+	 to allow GPU Overclocking
+	 However, the GPU overclocking set may not work on some devices
+	 particularly on those already beyond Android 12 and later already.
+	 But if you are on older Android 11, then this may possibly work.
+	 Requires Exynos ACME to also be loaded
+	 
+	 If unsure, just set this as N.

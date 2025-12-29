@@ -1408,6 +1408,8 @@ static __init int cpufreq_read_cpu_min_c2(char *cpu_min_c2)
 }
 __setup("cpu_min_c2=", cpufreq_read_cpu_min_c2);
 
+
+#ifdef THOMAS_GPU_OVERCLK
 // Thomas Turner / DaemonMCR
 /*Underclocking gpu to 377MHz*/
 unsigned long arg_gpu_min = 377000;
@@ -1438,7 +1440,7 @@ static __init int cpufreq_read_mif_min(char *mif_min)
         return ret;
 }
 __setup("mif_min=", cpufreq_read_mif_min);
-
+#endif /*CONFIG_GPU_OVERCLK*/
 
 /*Chatur, Carlos Burero, physwizz, and Mizumo-prjkt (MizProject/MizPrjkt)*/
 /*Overclocking little cores to 2.2GHz*/
@@ -1477,6 +1479,7 @@ static __init int cpufreq_read_cpu_max_c2(char *cpu_max_c2)
 }
 __setup("cpu_max_c2=", cpufreq_read_cpu_max_c2);
 
+#ifdef THOMAS_GPU_OVERCLK
 // Thomas Turner / DaemonMCR
 /*Overclocking gpu to 1.2GHz*/
 unsigned long arg_gpu_max = 1196000;
@@ -1507,6 +1510,7 @@ static __init int cpufreq_read_mif_max(char *mif_max)
         return ret;
 }
 __setup("mif_max=", cpufreq_read_mif_max);
+#endif /*CONFIG_GPU_OVERCLK*/
 
 
 static __init void init_slack_timer(struct exynos_cpufreq_domain *domain,
