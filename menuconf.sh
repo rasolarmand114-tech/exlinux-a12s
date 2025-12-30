@@ -7,3 +7,6 @@ export ARCH=arm64
 
 make clean && make mrproper
 make menuconfig
+
+rm -rfv scripts/basic/fixdep
+rm -rfv scripts/kconfig/mconf

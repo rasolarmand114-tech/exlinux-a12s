@@ -134,3 +134,7 @@ all.config
 
 # Build directory
 /out
+
+# Script autogen
+scripts/basic/fixdep
+scripts/kconfig/mconf
