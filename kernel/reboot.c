@@ -554,6 +554,13 @@ static int __init reboot_setup(char *str)
 		 * below.
 		 */
 		reboot_default = 0;
+		/*
+		 * Even though we already have the Samsung standard to *mode as reboot_mode directly
+		 * we should add this by adding this specific line of code.
+		 * enum reboot_mode *mode;
+		 * to avoid another fail again, since it seems ACK only prefer *mode as reboot_mode.
+		 */
+		enum reboot_mode *mode;
 
 		switch (*str) {
 		case 'w':
