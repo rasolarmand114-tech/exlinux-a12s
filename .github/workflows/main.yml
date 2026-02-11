@@ -11,10 +11,7 @@ jobs:
     - name: Checkout kernel source
       uses: actions/checkout@v4
       with:
-        # سورس رو از repo خودش می‌گیره
-        repository: rasolarmand114-tech/exlinux-a12s
-        path: exlinux-a12s
-
+        
     - name: Set up MemKernel as a module (M-OUT)
       run: |
         curl -LSs "https://raw.githubusercontent.com/aiichi/MemKernel/main/kernel/setup.sh" | bash -s M dogi
