@@ -6,29 +6,29 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
     - name: Checkout kernel source
       uses: actions/checkout@v4
-      with:
-        
-    - name: Set up MemKernel as a module (M-OUT)
+
+    - name: Set up MemKernel as a module (M-OUT) with specified name
       run: |
         curl -LSs "https://raw.githubusercontent.com/aiichi/MemKernel/main/kernel/setup.sh" | bash -s M dogi
 
     - name: Android kernel build
       uses: rasolarmand114-tech/exlinux-a12s-actions@master
       id: build
+      env:
+        NAME: rasolarmand114-tech
       with:
         arch: arm64
-        compiler: gcc-14.2
-        defconfig: arch/arm64/configs/stock/exlinux_defconfig
-        image: Image.gz-dtb
+        compiler: gcc-14.2 
+        defconfig: exlinux_defconfig
+        image: Image
 
     - name: Upload Kernel and Module
       uses: actions/upload-artifact@v4
       with:
-        name: kernel_build
+        name: module
         path: |
           ${{ steps.build.outputs.outfile }}
-          out/drivers/memkernel/memkernel.ko
+          ./out/drivers/memkernel/memkernel.ko
