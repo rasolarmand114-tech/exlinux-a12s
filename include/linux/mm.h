@@ -3022,7 +3022,11 @@ void __init setup_nr_node_ids(void);
 static inline void setup_nr_node_ids(void) {}
 #endif
 
-extern inline bool need_memory_boosting(struct pglist_data *pgdat);
+static inline bool need_memory_boosting(struct pglist_data *pgdat)
+{
+    /* disable memory boosting fallback */
+    return false;
+}
 
 enum memsize_kernel_type {
 	MEMSIZE_KERNEL_KERNEL = 0,
