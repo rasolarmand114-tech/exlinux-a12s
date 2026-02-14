@@ -1,0 +1,52 @@
+name: Build ExLinux Kernel (GCC 12.2 ARM64)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v4
+
+      - name: Install Dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y \
+            bc bison flex build-essential \
+            libssl-dev libelf-dev \
+            gcc-12 g++-12 \
+            crossbuild-essential-arm64
+
+      - name: Set Build Environment
+        run: |
+          echo "ARCH=arm64" >> $GITHUB_ENV
+          echo "SUBARCH=arm64" >> $GITHUB_ENV
+          echo "CROSS_COMPILE=aarch64-linux-gnu-" >> $GITHUB_ENV
+          echo "PLATFORM_VERSION=13" >> $GITHUB_ENV
+          echo "ANDROID_MAJOR_VERSION=t" >> $GITHUB_ENV
+          echo "LOCALVERSION=-exlinux" >> $GITHUB_ENV
+
+      - name: Verify Toolchain
+        run: |
+          which aarch64-linux-gnu-gcc
+          aarch64-linux-gnu-gcc --version
+
+      - name: Build Kernel
+        run: |
+          mkdir -p out
+          make O=out ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- exlinux_defconfig
+          make -j$(nproc) O=out ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu-
+
+      - name: Upload Kernel Image
+        uses: actions/upload-artifact@v4
+        with:
+          name: ExLinux-Kernel
+          path: |
+            out/arch/arm64/boot/Image
+            out/arch/arm64/boot/Image.gz
+            out/arch/arm64/boot/dts/**/*.dtb
