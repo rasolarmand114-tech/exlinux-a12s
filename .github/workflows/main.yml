@@ -30,11 +30,27 @@ jobs:
           echo "PLATFORM_VERSION=13" >> $GITHUB_ENV
           echo "ANDROID_MAJOR_VERSION=t" >> $GITHUB_ENV
           echo "LOCALVERSION=-exlinux" >> $GITHUB_ENV
+          echo "KCFLAGS=-w" >> $GITHUB_ENV
 
       - name: Verify Toolchain
         run: |
           which aarch64-linux-gnu-gcc
           aarch64-linux-gnu-gcc --version
+
+      - name: Build Kernel
+        run: |
+          mkdir -p out
+          make O=out ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- KCFLAGS=-w exlinux_defconfig
+          make -j$(nproc) O=out ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- KCFLAGS=-w
+
+      - name: Upload Kernel Image
+        uses: actions/upload-artifact@v4
+        with:
+          name: ExLinux-Kernel
+          path: |
+            out/arch/arm64/boot/Image
+            out/arch/arm64/boot/Image.gz
+            out/arch/arm64/boot/dts/**/*.dtb          aarch64-linux-gnu-gcc --version
 
       - name: Build Kernel
         run: |
