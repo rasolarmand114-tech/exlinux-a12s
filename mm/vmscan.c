@@ -2364,8 +2364,9 @@ static bool am_app_launch = false;
 #define MEM_BOOST_MAX_TIME (5 * HZ) /* 5 sec */
 
 #define MEM_BOOST_THRESHOLD ((512 * 1024 * 1024) / (PAGE_SIZE))
-inline bool need_memory_boosting(struct pglist_data *pgdat)
+bool need_memory_boosting(struct pglist_data *pgdat)
 {
+    // حالا اینجا کد تابع نوشته میشه
 	bool ret;
 	unsigned long pgdatfile = node_page_state(pgdat, NR_ACTIVE_FILE) +
 				node_page_state(pgdat, NR_INACTIVE_FILE);
